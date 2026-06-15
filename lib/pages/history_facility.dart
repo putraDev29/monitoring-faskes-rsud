@@ -278,7 +278,7 @@ class _HistoryFacilityPageState extends State<HistoryFacilityPage> {
     return Scaffold(
       backgroundColor: const Color(0xffF5F7FB),
 
-      bottomNavigationBar: const ReusableBottomNav(selected: 2),
+      bottomNavigationBar: const ReusableBottomNav(selected: 4),
 
       appBar: AppBar(
         elevation: 0,

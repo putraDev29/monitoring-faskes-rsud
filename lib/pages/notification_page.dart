@@ -83,7 +83,7 @@ class _NotificationPageState extends State<NotificationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      bottomNavigationBar: const ReusableBottomNav(selected: 3),
+      bottomNavigationBar: const ReusableBottomNav(selected: 5),
 
       appBar: AppBar(
         elevation: 0,

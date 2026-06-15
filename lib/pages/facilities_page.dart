@@ -179,7 +179,7 @@ class _FacilitiesPageState extends State<FacilitiesPage> {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FB),
 
-      bottomNavigationBar: const ReusableBottomNav(selected: 1),
+      bottomNavigationBar: const ReusableBottomNav(selected: 2),
 
       appBar: AppBar(
         elevation: 0,

@@ -102,14 +102,14 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     if (isLoading) {
       return const Scaffold(
-        bottomNavigationBar: const ReusableBottomNav(selected: 4),
+        bottomNavigationBar: const ReusableBottomNav(selected: 6),
         body: Center(child: CircularProgressIndicator()),
       );
     }
 
     if (profile == null) {
       return const Scaffold(
-        bottomNavigationBar: const ReusableBottomNav(selected: 4),
+        bottomNavigationBar: const ReusableBottomNav(selected: 6),
         body: Center(child: Text('Data profile gagal dimuat')),
       );
     }
@@ -121,7 +121,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FB),
 
-      bottomNavigationBar: const ReusableBottomNav(selected: 4),
+      bottomNavigationBar: const ReusableBottomNav(selected: 6),
 
       body: SingleChildScrollView(
         child: Column(
