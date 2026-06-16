@@ -49,16 +49,17 @@ class _HospitalsPageState extends State<HospitalsPage> {
 
     if (selectedFilter != "Semua") {
       result = result
-          .where((h) =>
-              h.status.toLowerCase() == selectedFilter.toLowerCase())
+          .where((h) => h.status.toLowerCase() == selectedFilter.toLowerCase())
           .toList();
     }
 
     if (searchQuery.isNotEmpty) {
       result = result
-          .where((h) =>
-              h.name.toLowerCase().contains(searchQuery.toLowerCase()) ||
-              h.address.toLowerCase().contains(searchQuery.toLowerCase()))
+          .where(
+            (h) =>
+                h.name.toLowerCase().contains(searchQuery.toLowerCase()) ||
+                h.address.toLowerCase().contains(searchQuery.toLowerCase()),
+          )
           .toList();
     }
 
@@ -98,7 +99,7 @@ class _HospitalsPageState extends State<HospitalsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F7FB),
+      backgroundColor: const Color(0xFF0D47A1),
       bottomNavigationBar: const ReusableBottomNav(selected: 1),
 
       appBar: AppBar(
@@ -117,117 +118,133 @@ class _HospitalsPageState extends State<HospitalsPage> {
       ),
 
       body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : Column(
-              children: [
-                // SEARCH
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 10),
-                  child: TextField(
-                    onChanged: (value) {
-                      searchQuery = value;
-                      applyFilter();
-                    },
-                    decoration: InputDecoration(
-                      hintText: "Cari rumah sakit...",
-                      prefixIcon: const Icon(Icons.search),
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding:
-                          const EdgeInsets.symmetric(vertical: 0),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(14),
-                        borderSide: BorderSide.none,
+          ? const Scaffold(
+              // ← bungkus dengan Scaffold putih sementara loading
+              backgroundColor: Color(0xFFF5F7FB),
+              body: Center(child: CircularProgressIndicator()),
+            )
+          : Container(
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                color: Color(0xFFF5F7FB),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(28),
+                  topRight: Radius.circular(28),
+                ),
+              ),
+              // ── PERUBAHAN 3: padding top 16 di Column dipindah ke sini ──
+              // agar lengkungan tidak terpotong oleh padding lama
+              child: Column(
+                children: [
+                  // SEARCH
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 10),
+                    child: TextField(
+                      onChanged: (value) {
+                        searchQuery = value;
+                        applyFilter();
+                      },
+                      decoration: InputDecoration(
+                        hintText: "Cari rumah sakit...",
+                        prefixIcon: const Icon(Icons.search),
+                        filled: true,
+                        fillColor: Colors.white,
+                        contentPadding: const EdgeInsets.symmetric(vertical: 0),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(14),
+                          borderSide: BorderSide.none,
+                        ),
                       ),
                     ),
                   ),
-                ),
 
-                // FILTER CHIPS
-                SizedBox(
-                  height: 42,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    itemCount: filters.length,
-                    itemBuilder: (context, index) {
-                      final filter = filters[index];
-                      final isSelected = selectedFilter == filter;
+                  // FILTER CHIPS
+                  SizedBox(
+                    height: 42,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      itemCount: filters.length,
+                      itemBuilder: (context, index) {
+                        final filter = filters[index];
+                        final isSelected = selectedFilter == filter;
 
-                      Color selectedColor = const Color(0xFF0D47A1);
-                      if (filter == "tersedia") {
-                        selectedColor = Colors.green;
-                      } else if (filter == "terbatas") {
-                        selectedColor = Colors.orange;
-                      } else if (filter == "penuh") {
-                        selectedColor = Colors.red;
-                      }
+                        Color selectedColor = const Color(0xFF0D47A1);
+                        if (filter == "tersedia") {
+                          selectedColor = Colors.green;
+                        } else if (filter == "terbatas") {
+                          selectedColor = Colors.orange;
+                        } else if (filter == "penuh") {
+                          selectedColor = Colors.red;
+                        }
 
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() => selectedFilter = filter);
-                          applyFilter();
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.only(right: 10),
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          decoration: BoxDecoration(
-                            color:
-                                isSelected ? selectedColor : Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: selectedColor.withOpacity(0.25),
-                            ),
-                          ),
-                          alignment: Alignment.center,
-                          child: Text(
-                            getStatusLabel(filter),
-                            style: TextStyle(
-                              color: isSelected
-                                  ? Colors.white
-                                  : selectedColor,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-
-                const SizedBox(height: 12),
-
-                // LIST
-                Expanded(
-                  child: filteredHospitals.isEmpty
-                      ? Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.local_hospital_outlined,
-                                  size: 64,
-                                  color: Colors.grey.shade300),
-                              const SizedBox(height: 16),
-                              Text(
-                                "Tidak ada rumah sakit ditemukan",
-                                style: TextStyle(
-                                    color: Colors.grey.shade500,
-                                    fontSize: 14),
-                              ),
-                            ],
-                          ),
-                        )
-                      : ListView.builder(
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: 16),
-                          itemCount: filteredHospitals.length,
-                          itemBuilder: (context, index) {
-                            final item = filteredHospitals[index];
-                            return _buildCard(item);
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() => selectedFilter = filter);
+                            applyFilter();
                           },
-                        ),
-                ),
-              ],
+                          child: Container(
+                            margin: const EdgeInsets.only(right: 10),
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            decoration: BoxDecoration(
+                              color: isSelected ? selectedColor : Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: selectedColor.withOpacity(0.25),
+                              ),
+                            ),
+                            alignment: Alignment.center,
+                            child: Text(
+                              getStatusLabel(filter),
+                              style: TextStyle(
+                                color: isSelected
+                                    ? Colors.white
+                                    : selectedColor,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+
+                  const SizedBox(height: 12),
+
+                  // LIST
+                  Expanded(
+                    child: filteredHospitals.isEmpty
+                        ? Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.local_hospital_outlined,
+                                  size: 64,
+                                  color: Colors.grey.shade300,
+                                ),
+                                const SizedBox(height: 16),
+                                Text(
+                                  "Tidak ada rumah sakit ditemukan",
+                                  style: TextStyle(
+                                    color: Colors.grey.shade500,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        : ListView.builder(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            itemCount: filteredHospitals.length,
+                            itemBuilder: (context, index) {
+                              final item = filteredHospitals[index];
+                              return _buildCard(item);
+                            },
+                          ),
+                  ),
+                ],
+              ),
             ),
     );
   }
@@ -310,8 +327,11 @@ class _HospitalsPageState extends State<HospitalsPage> {
                     const SizedBox(height: 4),
                     Row(
                       children: [
-                        Icon(Icons.location_on_outlined,
-                            size: 13, color: Colors.grey.shade500),
+                        Icon(
+                          Icons.location_on_outlined,
+                          size: 13,
+                          color: Colors.grey.shade500,
+                        ),
                         const SizedBox(width: 3),
                         Expanded(
                           child: Text(
@@ -339,7 +359,8 @@ class _HospitalsPageState extends State<HospitalsPage> {
                               minHeight: 8,
                               backgroundColor: Colors.grey.shade200,
                               valueColor: AlwaysStoppedAnimation<Color>(
-                                  statusColor),
+                                statusColor,
+                              ),
                             ),
                           ),
                         ),
@@ -362,7 +383,9 @@ class _HospitalsPageState extends State<HospitalsPage> {
               // STATUS BADGE
               Container(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: 12, vertical: 7),
+                  horizontal: 12,
+                  vertical: 7,
+                ),
                 decoration: BoxDecoration(
                   color: statusColor.withOpacity(0.12),
                   borderRadius: BorderRadius.circular(20),
@@ -380,8 +403,7 @@ class _HospitalsPageState extends State<HospitalsPage> {
               const SizedBox(width: 8),
 
               // ARROW
-              Icon(Icons.chevron_right,
-                  color: Colors.grey.shade400, size: 22),
+              Icon(Icons.chevron_right, color: Colors.grey.shade400, size: 22),
             ],
           ),
         ),

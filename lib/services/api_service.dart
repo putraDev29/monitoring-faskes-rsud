@@ -13,18 +13,11 @@ import 'auth_service.dart';
 
 class ApiService {
   static Future<DashboardModel> getDashboard() async {
-    /// AMBIL TOKEN
     String? token = await AuthService.getToken();
 
     final response = await http.get(
       Uri.parse("${ApiConstant.baseUrl}/dashboard"),
-
-      headers: {
-        "Accept": "application/json",
-
-        /// BEARER TOKEN
-        "Authorization": "Bearer $token",
-      },
+      headers: {"Accept": "application/json", "Authorization": "Bearer $token"},
     );
 
     final data = jsonDecode(response.body);
@@ -79,8 +72,6 @@ class ApiService {
     }
   }
 
-  // services/api_service.dart
-
   static Future<Map<String, dynamic>> updateFacility(
     int id,
     EditFacilityModel data,
@@ -120,9 +111,6 @@ class ApiService {
         },
       );
 
-      print("STATUS : ${response.statusCode}");
-      print("BODY : ${response.body}");
-
       if (response.statusCode == 200) {
         final Map<String, dynamic> jsonData = jsonDecode(response.body);
 
@@ -130,13 +118,11 @@ class ApiService {
           jsonData,
         );
 
-        // return list data
         return result.data;
       } else {
         return [];
       }
     } catch (e) {
-      print("ERROR : $e");
       return [];
     }
   }
@@ -267,7 +253,6 @@ class ApiService {
     }
   }
 
-  // ── GET /hospitals/{id} ────────────────────────────────────────────────────
   static Future<HospitalDetail> getHospitalDetail(int id) async {
     try {
       String? token = await AuthService.getToken();
@@ -292,7 +277,6 @@ class ApiService {
     }
   }
 
-  // ── GET /hospitals/{id}/examinations ──────────────────────────────────────
   static Future<List<Examination>> getHospitalExaminations(int id) async {
     try {
       String? token = await AuthService.getToken();
@@ -347,7 +331,6 @@ class ApiService {
     }
   }
 
-  // ── GET /examinations/{id} ─────────────────────────────────────────────────
   static Future<Examination> getExamination(int id) async {
     try {
       String? token = await AuthService.getToken();
@@ -372,7 +355,6 @@ class ApiService {
     }
   }
 
-  // ── POST /examinations ─────────────────────────────────────────────────────
   static Future<Examination> createExamination({
     required String examinationName,
     required String doctorName,
@@ -408,7 +390,6 @@ class ApiService {
     }
   }
 
-  // ── PUT /examinations/{id} ─────────────────────────────────────────────────
   static Future<Examination> updateExamination({
     required int id,
     required String examinationName,
@@ -447,7 +428,6 @@ class ApiService {
     }
   }
 
-  // ── DELETE /examinations/{id} ──────────────────────────────────────────────
   static Future<void> deleteExamination(int id) async {
     try {
       String? token = await AuthService.getToken();
@@ -466,6 +446,140 @@ class ApiService {
       }
     } catch (e) {
       rethrow;
+    }
+  }
+
+  // ── GET /users ─────────────────────────────────────────────────────────────
+  /// Ambil list semua user dengan role admin (khusus admin_utama)
+  static Future<List<User>> getAdminUsers() async {
+    try {
+      String? token = await AuthService.getToken();
+
+      final response = await http.get(
+        Uri.parse('${ApiConstant.baseUrl}/users'),
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token",
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final body = jsonDecode(response.body);
+
+        // Ambil list dari key 'data', filter hanya role 'admin'
+        final List list = body['data'] as List;
+
+        return list
+            .map((e) => User.fromJson(e as Map<String, dynamic>))
+            .where((u) => u.role == 'admin')
+            .toList();
+      } else {
+        throw Exception('Gagal memuat daftar admin: ${response.statusCode}');
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  // ── POST /register ─────────────────────────────────────────────────────────
+  /// Tambah user baru dengan role admin (khusus admin_utama)
+  static Future<Map<String, dynamic>> createAdminUser({
+    required String name,
+    required String email,
+    required String password,
+    required String phoneNumber,
+    required String address,
+  }) async {
+    try {
+      String? token = await AuthService.getToken();
+
+      final response = await http.post(
+        Uri.parse('${ApiConstant.baseUrl}/register'),
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token",
+        },
+        body: jsonEncode({
+          'name': name,
+          'email': email,
+          'password': password,
+          'password_confirmation': password,
+          'phone_number': phoneNumber,
+          'address': address,
+          'role': 'admin',
+        }),
+      );
+
+      final body = jsonDecode(response.body);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return {"statusCode": response.statusCode, "data": body};
+      } else {
+        // Tangkap pesan error dari backend (misal validasi duplikat email)
+        final message = body['message'] ?? 'Gagal menambahkan admin';
+        throw Exception(message);
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<Map<String, dynamic>> updateAdminUser({
+    required int id,
+    required String name,
+    required String email,
+    required String phoneNumber,
+    required String address,
+    String? password,
+  }) async {
+    try {
+      final token = await AuthService.getToken();
+
+      final body = {
+        'name': name,
+        'email': email,
+        'phone_number': phoneNumber,
+        'address': address,
+      };
+
+      if (password != null && password.trim().isNotEmpty) {
+        body['password'] = password;
+      }
+
+      final response = await http.put(
+        Uri.parse('${ApiConstant.baseUrl}/users/$id'),
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: body,
+      );
+
+      return jsonDecode(response.body);
+    } catch (e) {
+      return {'success': false, 'message': e.toString()};
+    }
+  }
+
+  // ================= DELETE USER =================
+
+  static Future<Map<String, dynamic>> deleteAdminUser(int id) async {
+    try {
+      final token = await AuthService.getToken();
+
+      final response = await http.delete(
+        Uri.parse('${ApiConstant.baseUrl}/users/$id'),
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      return jsonDecode(response.body);
+    } catch (e) {
+      return {'success': false, 'message': e.toString()};
     }
   }
 }

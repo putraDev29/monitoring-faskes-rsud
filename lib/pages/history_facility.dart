@@ -276,7 +276,7 @@ class _HistoryFacilityPageState extends State<HistoryFacilityPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF5F7FB),
+      backgroundColor: const Color(0xFF0D47A1),
 
       bottomNavigationBar: const ReusableBottomNav(selected: 4),
 
@@ -296,170 +296,188 @@ class _HistoryFacilityPageState extends State<HistoryFacilityPage> {
       ),
 
       body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : Column(
-              children: [
-                // SEARCH
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(14),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.04),
-                          blurRadius: 10,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
+          ? const Scaffold(
+              // ← bungkus dengan Scaffold putih sementara loading
+              backgroundColor: Color(0xFFF5F7FB),
+              body: Center(child: CircularProgressIndicator()),
+            )
+          : Container(
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                color: Color(0xFFF5F7FB),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(28),
+                  topRight: Radius.circular(28),
+                ),
+              ),
+              // ── PERUBAHAN 3: padding top 16 di Column dipindah ke sini ──
+              // agar lengkungan tidak terpotong oleh padding lama
+              child: Column(
+                children: [
+                  // SEARCH
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(14),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.04),
+                            blurRadius: 10,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
 
-                    child: TextField(
-                      onChanged: (value) {
-                        searchQuery = value;
+                      child: TextField(
+                        onChanged: (value) {
+                          searchQuery = value;
 
-                        applyFilter();
-                      },
+                          applyFilter();
+                        },
 
-                      decoration: InputDecoration(
-                        hintText: "Cari riwayat...",
+                        decoration: InputDecoration(
+                          hintText: "Cari riwayat...",
 
-                        hintStyle: TextStyle(
-                          color: Colors.grey.shade500,
-                          fontSize: 14,
-                        ),
+                          hintStyle: TextStyle(
+                            color: Colors.grey.shade500,
+                            fontSize: 14,
+                          ),
 
-                        prefixIcon: Icon(
-                          Icons.search,
-                          color: Colors.grey.shade600,
-                        ),
+                          prefixIcon: Icon(
+                            Icons.search,
+                            color: Colors.grey.shade600,
+                          ),
 
-                        filled: true,
-                        fillColor: Colors.white,
+                          filled: true,
+                          fillColor: Colors.white,
 
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 14,
-                        ),
+                          contentPadding: const EdgeInsets.symmetric(
+                            vertical: 14,
+                          ),
 
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(14),
-                          borderSide: BorderSide.none,
-                        ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(14),
+                            borderSide: BorderSide.none,
+                          ),
 
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(14),
-                          borderSide: BorderSide.none,
-                        ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(14),
+                            borderSide: BorderSide.none,
+                          ),
 
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(14),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF0D47A1),
-                            width: 1,
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(14),
+                            borderSide: const BorderSide(
+                              color: Color(0xFF0D47A1),
+                              width: 1,
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
 
-                // FILTER
-                SizedBox(
-                  height: 42,
+                  // FILTER
+                  SizedBox(
+                    height: 42,
 
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
 
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
 
-                    itemCount: filters.length,
+                      itemCount: filters.length,
 
-                    itemBuilder: (context, index) {
-                      final filter = filters[index];
+                      itemBuilder: (context, index) {
+                        final filter = filters[index];
 
-                      final isSelected = selectedFilter == filter;
+                        final isSelected = selectedFilter == filter;
 
-                      Color selectedColor = const Color(0xFF0D47A1);
+                        Color selectedColor = const Color(0xFF0D47A1);
 
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedFilter = filter;
-                          });
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedFilter = filter;
+                            });
 
-                          applyFilter();
-                        },
-
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 250),
-
-                          margin: const EdgeInsets.only(right: 10),
-
-                          padding: const EdgeInsets.symmetric(horizontal: 18),
-
-                          decoration: BoxDecoration(
-                            color: isSelected ? selectedColor : Colors.white,
-
-                            borderRadius: BorderRadius.circular(12),
-
-                            border: Border.all(
-                              color: isSelected
-                                  ? selectedColor
-                                  : selectedColor.withOpacity(0.25),
-                            ),
-
-                            boxShadow: [
-                              BoxShadow(
-                                color: isSelected
-                                    ? selectedColor.withOpacity(0.20)
-                                    : Colors.black.withOpacity(0.03),
-
-                                blurRadius: 8,
-
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
-                          ),
-
-                          alignment: Alignment.center,
-
-                          child: Text(
-                            filter,
-
-                            style: TextStyle(
-                              color: isSelected ? Colors.white : selectedColor,
-
-                              fontWeight: FontWeight.w600,
-
-                              fontSize: 13,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-
-                const SizedBox(height: 14),
-
-                // LIST
-                Expanded(
-                  child: filteredHistories.isEmpty
-                      ? const Center(child: Text("Tidak ada riwayat"))
-                      : ListView.builder(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-
-                          itemCount: filteredHistories.length,
-
-                          itemBuilder: (context, index) {
-                            final item = filteredHistories[index];
-
-                            return buildHistoryCard(item);
+                            applyFilter();
                           },
-                        ),
-                ),
-              ],
+
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 250),
+
+                            margin: const EdgeInsets.only(right: 10),
+
+                            padding: const EdgeInsets.symmetric(horizontal: 18),
+
+                            decoration: BoxDecoration(
+                              color: isSelected ? selectedColor : Colors.white,
+
+                              borderRadius: BorderRadius.circular(12),
+
+                              border: Border.all(
+                                color: isSelected
+                                    ? selectedColor
+                                    : selectedColor.withOpacity(0.25),
+                              ),
+
+                              boxShadow: [
+                                BoxShadow(
+                                  color: isSelected
+                                      ? selectedColor.withOpacity(0.20)
+                                      : Colors.black.withOpacity(0.03),
+
+                                  blurRadius: 8,
+
+                                  offset: const Offset(0, 3),
+                                ),
+                              ],
+                            ),
+
+                            alignment: Alignment.center,
+
+                            child: Text(
+                              filter,
+
+                              style: TextStyle(
+                                color: isSelected
+                                    ? Colors.white
+                                    : selectedColor,
+
+                                fontWeight: FontWeight.w600,
+
+                                fontSize: 13,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+
+                  const SizedBox(height: 14),
+
+                  // LIST
+                  Expanded(
+                    child: filteredHistories.isEmpty
+                        ? const Center(child: Text("Tidak ada riwayat"))
+                        : ListView.builder(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+
+                            itemCount: filteredHistories.length,
+
+                            itemBuilder: (context, index) {
+                              final item = filteredHistories[index];
+
+                              return buildHistoryCard(item);
+                            },
+                          ),
+                  ),
+                ],
+              ),
             ),
     );
   }

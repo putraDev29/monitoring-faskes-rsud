@@ -48,12 +48,10 @@ class _ExaminationsPageState extends State<ExaminationsPage> {
 
     if (searchQuery.isNotEmpty) {
       result = result.where((item) {
-        return item.examinationName
-                .toLowerCase()
-                .contains(searchQuery.toLowerCase()) ||
-            item.doctorName
-                .toLowerCase()
-                .contains(searchQuery.toLowerCase());
+        return item.examinationName.toLowerCase().contains(
+              searchQuery.toLowerCase(),
+            ) ||
+            item.doctorName.toLowerCase().contains(searchQuery.toLowerCase());
       }).toList();
     }
 
@@ -100,8 +98,7 @@ class _ExaminationsPageState extends State<ExaminationsPage> {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
         title: const Text(
           "Hapus Pemeriksaan",
           style: TextStyle(fontWeight: FontWeight.bold),
@@ -166,7 +163,7 @@ class _ExaminationsPageState extends State<ExaminationsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F7FB),
+      backgroundColor: const Color(0xFF0D47A1),
 
       bottomNavigationBar: const ReusableBottomNav(selected: 3),
 
@@ -203,72 +200,88 @@ class _ExaminationsPageState extends State<ExaminationsPage> {
       ),
 
       body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : Column(
-              children: [
-                // SEARCH
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 10),
-                  child: TextField(
-                    onChanged: (value) {
-                      searchQuery = value;
-                      applySearch();
-                    },
-                    decoration: InputDecoration(
-                      hintText: "Cari pemeriksaan atau dokter...",
-                      prefixIcon: const Icon(Icons.search),
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding:
-                          const EdgeInsets.symmetric(vertical: 0),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(14),
-                        borderSide: BorderSide.none,
+          ? const Scaffold(
+              // ← bungkus dengan Scaffold putih sementara loading
+              backgroundColor: Color(0xFFF5F7FB),
+              body: Center(child: CircularProgressIndicator()),
+            )
+          : Container(
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                color: Color(0xFFF5F7FB),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(28),
+                  topRight: Radius.circular(28),
+                ),
+              ),
+              // ── PERUBAHAN 3: padding top 16 di Column dipindah ke sini ──
+              // agar lengkungan tidak terpotong oleh padding lama
+              child: Column(
+                children: [
+                  // SEARCH
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 10),
+                    child: TextField(
+                      onChanged: (value) {
+                        searchQuery = value;
+                        applySearch();
+                      },
+                      decoration: InputDecoration(
+                        hintText: "Cari pemeriksaan atau dokter...",
+                        prefixIcon: const Icon(Icons.search),
+                        filled: true,
+                        fillColor: Colors.white,
+                        contentPadding: const EdgeInsets.symmetric(vertical: 0),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(14),
+                          borderSide: BorderSide.none,
+                        ),
                       ),
                     ),
                   ),
-                ),
 
-                // COUNT BADGE
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 6),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF0D47A1).withOpacity(0.08),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text(
-                          "${filteredExaminations.length} pemeriksaan",
-                          style: const TextStyle(
-                            color: Color(0xFF0D47A1),
-                            fontWeight: FontWeight.w600,
-                            fontSize: 13,
+                  // COUNT BADGE
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 6,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF0D47A1).withOpacity(0.08),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Text(
+                            "${filteredExaminations.length} pemeriksaan",
+                            style: const TextStyle(
+                              color: Color(0xFF0D47A1),
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
 
-                const SizedBox(height: 12),
+                  const SizedBox(height: 12),
 
-                // LIST
-                Expanded(
-                  child: filteredExaminations.isEmpty
-                      ? _buildEmpty()
-                      : ListView.builder(
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: 16),
-                          itemCount: filteredExaminations.length,
-                          itemBuilder: (context, index) =>
-                              _buildCard(filteredExaminations[index]),
-                        ),
-                ),
-              ],
+                  // LIST
+                  Expanded(
+                    child: filteredExaminations.isEmpty
+                        ? _buildEmpty()
+                        : ListView.builder(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            itemCount: filteredExaminations.length,
+                            itemBuilder: (context, index) =>
+                                _buildCard(filteredExaminations[index]),
+                          ),
+                  ),
+                ],
+              ),
             ),
     );
   }
@@ -331,8 +344,11 @@ class _ExaminationsPageState extends State<ExaminationsPage> {
                     const SizedBox(height: 4),
                     Row(
                       children: [
-                        const Icon(Icons.person_outline,
-                            size: 13, color: Colors.grey),
+                        const Icon(
+                          Icons.person_outline,
+                          size: 13,
+                          color: Colors.grey,
+                        ),
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
@@ -349,8 +365,11 @@ class _ExaminationsPageState extends State<ExaminationsPage> {
                     const SizedBox(height: 6),
                     Row(
                       children: [
-                        const Icon(Icons.schedule,
-                            size: 13, color: Colors.grey),
+                        const Icon(
+                          Icons.schedule,
+                          size: 13,
+                          color: Colors.grey,
+                        ),
                         const SizedBox(width: 4),
                         Text(
                           "${item.openingHours} – ${item.closingHours}",
@@ -409,8 +428,7 @@ class _ExaminationsPageState extends State<ExaminationsPage> {
               const SizedBox(width: 4),
 
               // ARROW
-              Icon(Icons.chevron_right,
-                  color: Colors.grey.shade400, size: 22),
+              Icon(Icons.chevron_right, color: Colors.grey.shade400, size: 22),
             ],
           ),
         ),
@@ -425,8 +443,11 @@ class _ExaminationsPageState extends State<ExaminationsPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.medical_services_outlined,
-              size: 64, color: Colors.grey.shade300),
+          Icon(
+            Icons.medical_services_outlined,
+            size: 64,
+            color: Colors.grey.shade300,
+          ),
           const SizedBox(height: 16),
           Text(
             searchQuery.isEmpty
@@ -445,7 +466,9 @@ class _ExaminationsPageState extends State<ExaminationsPage> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 padding: const EdgeInsets.symmetric(
-                    horizontal: 20, vertical: 12),
+                  horizontal: 20,
+                  vertical: 12,
+                ),
               ),
               onPressed: () => _navigateToForm(),
               icon: const Icon(Icons.add, size: 18),

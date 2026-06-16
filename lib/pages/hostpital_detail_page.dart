@@ -26,6 +26,9 @@ class _HostpitalDetailPageState extends State<HostpitalDetailPage>
 
   late TabController _tabController;
 
+  // Tinggi area lengkungan TabBar yang overlap ke header
+  static const double _tabBarOverlap = 64.0;
+
   @override
   void initState() {
     super.initState();
@@ -55,8 +58,9 @@ class _HostpitalDetailPageState extends State<HostpitalDetailPage>
 
   Future<void> _loadExaminations() async {
     try {
-      final result =
-          await ApiService.getHospitalExaminations(widget.hospitalId);
+      final result = await ApiService.getHospitalExaminations(
+        widget.hospitalId,
+      );
       setState(() {
         examinations = result;
         isLoadingExams = false;
@@ -171,19 +175,44 @@ class _HostpitalDetailPageState extends State<HostpitalDetailPage>
 
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FB),
-
-      // ── Fixed AppBar — tidak bergerak saat scroll ──────────────────────────
       appBar: _buildFixedAppBar(),
-
       body: Column(
         children: [
-          // ── Header info rumah sakit — fixed, tidak ikut scroll ─────────────
-          _buildHospitalHeader(),
+          // ── Header + TabBar dalam Stack ────────────────────────────────
+          // Header diberi padding bawah ekstra sebesar _tabBarOverlap
+          // agar TabBar yang overlap tidak menimpa teks header.
+          Stack(
+            clipBehavior: Clip.none,
+            children: [
+              // ── Background gradient (header + ruang untuk lengkungan) ──
+              Column(
+                children: [
+                  _buildHospitalHeader(),
+                  // Potongan gradient di bawah header sebagai "alas" TabBar
+                  Container(
+                    height: _tabBarOverlap,
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [Color(0xFF0D47A1), Color(0xFF1565C0)],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
 
-          // ── TabBar — fixed (pinned) ────────────────────────────────────────
-          _buildTabBar(),
+              // ── TabBar putih dengan sudut melengkung ──────────────────
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: _buildTabBar(),
+              ),
+            ],
+          ),
 
-          // ── Tab content — hanya bagian ini yang scroll ─────────────────────
+          // ── Tab content ────────────────────────────────────────────────
           Expanded(
             child: TabBarView(
               controller: _tabController,
@@ -220,7 +249,7 @@ class _HostpitalDetailPageState extends State<HostpitalDetailPage>
     );
   }
 
-  // ── Hospital Header (fixed, tidak scroll) ──────────────────────────────────
+  // ── Hospital Header ────────────────────────────────────────────────────────
 
   Widget _buildHospitalHeader() {
     final hospital = detail!.hospital;
@@ -332,16 +361,23 @@ class _HostpitalDetailPageState extends State<HostpitalDetailPage>
     );
   }
 
-  // ── Summary Cards (fixed) ──────────────────────────────────────────────────
-
-  // ── TabBar (fixed) ─────────────────────────────────────────────────────────
+  // ── TabBar ─────────────────────────────────────────────────────────────────
 
   Widget _buildTabBar() {
     return Container(
-      color: Colors.white,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(24),
+          topRight: Radius.circular(24),
+        ),
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          const SizedBox(height: 4),
+
+          // Tab items
           TabBar(
             controller: _tabController,
             labelColor: const Color(0xFF0D47A1),
@@ -432,8 +468,11 @@ class _HostpitalDetailPageState extends State<HostpitalDetailPage>
               color: cardColor.withOpacity(0.15),
               borderRadius: BorderRadius.circular(16),
             ),
-            child: Icon(getIcon(item.facilityType.icon),
-                color: cardColor, size: 28),
+            child: Icon(
+              getIcon(item.facilityType.icon),
+              color: cardColor,
+              size: 28,
+            ),
           ),
           const SizedBox(width: 14),
           Expanded(
@@ -443,13 +482,17 @@ class _HostpitalDetailPageState extends State<HostpitalDetailPage>
                 Text(
                   item.facilityType.name,
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 15),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   "Tersedia ${item.availableUnit} dari ${item.totalUnit}",
-                  style:
-                      TextStyle(color: Colors.grey.shade600, fontSize: 13),
+                  style: TextStyle(
+                    color: Colors.grey.shade600,
+                    fontSize: 13,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 Row(
@@ -470,7 +513,9 @@ class _HostpitalDetailPageState extends State<HostpitalDetailPage>
                     Text(
                       "${item.percentage}%",
                       style: const TextStyle(
-                          fontWeight: FontWeight.w600, fontSize: 12),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12,
+                      ),
                     ),
                   ],
                 ),
@@ -479,8 +524,7 @@ class _HostpitalDetailPageState extends State<HostpitalDetailPage>
           ),
           const SizedBox(width: 12),
           Container(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
             decoration: BoxDecoration(
               color: statusColor.withOpacity(0.12),
               borderRadius: BorderRadius.circular(20),
@@ -488,9 +532,10 @@ class _HostpitalDetailPageState extends State<HostpitalDetailPage>
             child: Text(
               getStatusLabel(item.status),
               style: TextStyle(
-                  color: statusColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12),
+                color: statusColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+              ),
             ),
           ),
         ],
@@ -558,19 +603,26 @@ class _HostpitalDetailPageState extends State<HostpitalDetailPage>
                 Text(
                   item.examinationName,
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 15),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Row(
                   children: [
-                    const Icon(Icons.person_outline,
-                        size: 13, color: Colors.grey),
+                    const Icon(
+                      Icons.person_outline,
+                      size: 13,
+                      color: Colors.grey,
+                    ),
                     const SizedBox(width: 4),
                     Expanded(
                       child: Text(
                         item.doctorName,
                         style: TextStyle(
-                            color: Colors.grey.shade600, fontSize: 13),
+                          color: Colors.grey.shade600,
+                          fontSize: 13,
+                        ),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -579,7 +631,9 @@ class _HostpitalDetailPageState extends State<HostpitalDetailPage>
                 const SizedBox(height: 6),
                 Container(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 10, vertical: 4),
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.green.withOpacity(0.08),
                     borderRadius: BorderRadius.circular(8),
@@ -587,8 +641,11 @@ class _HostpitalDetailPageState extends State<HostpitalDetailPage>
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.schedule,
-                          size: 13, color: Colors.green),
+                      const Icon(
+                        Icons.schedule,
+                        size: 13,
+                        color: Colors.green,
+                      ),
                       const SizedBox(width: 4),
                       Text(
                         "${item.openingHours} – ${item.closingHours}",
@@ -611,8 +668,10 @@ class _HostpitalDetailPageState extends State<HostpitalDetailPage>
 
   // ── Empty State ────────────────────────────────────────────────────────────
 
-  Widget _buildEmptyState(
-      {required IconData icon, required String message}) {
+  Widget _buildEmptyState({
+    required IconData icon,
+    required String message,
+  }) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -647,13 +706,11 @@ class _HostpitalDetailPageState extends State<HostpitalDetailPage>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.error_outline,
-                size: 64, color: Colors.grey.shade300),
+            Icon(Icons.error_outline, size: 64, color: Colors.grey.shade300),
             const SizedBox(height: 16),
             Text(
               "Data tidak ditemukan",
-              style:
-                  TextStyle(color: Colors.grey.shade500, fontSize: 14),
+              style: TextStyle(color: Colors.grey.shade500, fontSize: 14),
             ),
             const SizedBox(height: 16),
             ElevatedButton(

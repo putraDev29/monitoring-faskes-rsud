@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'dashboard_page.dart';
+import 'forgot_password_page.dart';
 import '../services/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
@@ -188,6 +189,27 @@ class _LoginPageState extends State<LoginPage> {
                                       fontSize: 16,
                                     ),
                                   ),
+                          ),
+                        ),
+
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => const ResetPasswordPage(),
+                                ),
+                              );
+                            },
+                            child: const Text(
+                              'Lupa Password?',
+                              style: TextStyle(
+                                color: Color(0xFF1976D2),
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
                           ),
                         ),
                       ],
