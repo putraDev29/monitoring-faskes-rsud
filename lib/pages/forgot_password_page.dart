@@ -149,7 +149,7 @@ class _ResetPasswordPageState
                     children: [
                       const Icon(
                         Icons.lock_reset,
-                        size: 70,
+                        size: 64,
                         color: Color(0xFF1976D2),
                       ),
 
@@ -158,7 +158,7 @@ class _ResetPasswordPageState
                       const Text(
                         "RESET PASSWORD",
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 18,
                           fontWeight:
                               FontWeight.bold,
                           color:
