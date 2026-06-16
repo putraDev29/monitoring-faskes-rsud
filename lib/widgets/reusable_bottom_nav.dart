@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:monitoring_faskes_rsud/config/app_color.dart';
 import 'package:monitoring_faskes_rsud/pages/dashboard_page.dart';
+import 'package:monitoring_faskes_rsud/pages/examination_page.dart';
 import 'package:monitoring_faskes_rsud/pages/facilities_page.dart';
 import 'package:monitoring_faskes_rsud/pages/history_facility.dart';
 import 'package:monitoring_faskes_rsud/pages/notification_page.dart';
 import 'package:monitoring_faskes_rsud/pages/profile_page.dart';
 import 'package:monitoring_faskes_rsud/services/api_service.dart';
+import 'package:monitoring_faskes_rsud/pages/hospital_page.dart';
 
 class ReusableBottomNav extends StatefulWidget {
   final int selected;
@@ -48,20 +50,29 @@ class _ReusableBottomNavState extends State<ReusableBottomNav> {
         break;
 
       case 1:
-        page = const FacilitiesPage();
+        page = const HospitalsPage();
         break;
 
       case 2:
-        page = const HistoryFacilityPage();
+        page = const FacilitiesPage();
         break;
 
       case 3:
-        page = const NotificationPage();
+        page = const ExaminationsPage();
         break;
 
       case 4:
+        page = const HistoryFacilityPage();
+        break;
+
+      case 5:
+        page = const NotificationPage();
+        break;
+
+      case 6:
         page = const ProfilePage();
         break;
+
 
       default:
         page = const DashboardPage();
@@ -89,8 +100,18 @@ class _ReusableBottomNavState extends State<ReusableBottomNav> {
         ),
 
         const BottomNavigationBarItem(
+          icon: Icon(Icons.medical_services),
+          label: "Rumah Sakit",
+        ),
+
+        const BottomNavigationBarItem(
           icon: Icon(Icons.local_hospital),
           label: "Fasilitas",
+        ),
+
+        const BottomNavigationBarItem(
+          icon: Icon(Icons.medical_services),
+          label: "Layanan",
         ),
 
         const BottomNavigationBarItem(

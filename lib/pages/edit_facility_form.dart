@@ -68,6 +68,7 @@ class _EditFacilityFormState extends State<EditFacilityForm> {
 
     availableUnitController.text = available.toString();
 
+    // FIX: gunakan percentageController, bukan availableUnitController
     percentageController.text = "${percentage.toStringAsFixed(2)}%";
   }
 
@@ -246,7 +247,7 @@ class _EditFacilityFormState extends State<EditFacilityForm> {
     final facilityType = widget.facility.facilityType;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F7FB),
+      backgroundColor: const Color(0xFF0D47A1), // biru untuk area di balik lengkungan
 
       appBar: AppBar(
         elevation: 0,
@@ -277,185 +278,196 @@ class _EditFacilityFormState extends State<EditFacilityForm> {
         ),
       ),
 
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 52,
-                      height: 52,
-                      decoration: BoxDecoration(
-                        color: getCardColor(
-                          facilityType.color,
-                        ).withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(14),
+      // Body melengkung di bagian atas
+      body: Container(
+        decoration: const BoxDecoration(
+          color: Color(0xFFF5F7FB),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(28),
+            topRight: Radius.circular(28),
+          ),
+        ),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.fromLTRB(16, 24, 16, 16),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 52,
+                        height: 52,
+                        decoration: BoxDecoration(
+                          color: getCardColor(
+                            facilityType.color,
+                          ).withOpacity(0.15),
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        child: Icon(
+                          getIcon(facilityType.icon),
+                          color: getCardColor(facilityType.color),
+                        ),
                       ),
-                      child: Icon(
-                        getIcon(facilityType.icon),
-                        color: getCardColor(facilityType.color),
+
+                      const SizedBox(width: 14),
+
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            facilityType.name,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+
+                          const SizedBox(height: 4),
+
+                          Text(
+                            facilityType.description,
+                            style: TextStyle(
+                              color: Colors.grey.shade600,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 24),
+
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Informasi Unit",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      color: Colors.grey.shade800,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 18),
+
+                buildLabel("Total Unit"),
+
+                TextFormField(
+                  controller: totalUnitController,
+                  keyboardType: TextInputType.number,
+                  onChanged: (_) => calculateData(),
+                  decoration: inputDecoration(""),
+                ),
+
+                const SizedBox(height: 18),
+
+                buildLabel("Terpakai"),
+
+                TextFormField(
+                  controller: usedUnitController,
+                  keyboardType: TextInputType.number,
+                  onChanged: (_) => calculateData(),
+                  decoration: inputDecoration(""),
+                ),
+
+                const SizedBox(height: 18),
+
+                buildLabel("Tersedia"),
+
+                TextFormField(
+                  readOnly: true,
+                  controller: availableUnitController,
+                  style: const TextStyle(color: Colors.black54),
+                  decoration: inputDecoration(
+                    "",
+                  ).copyWith(filled: true, fillColor: Colors.grey.shade200),
+                ),
+
+                const SizedBox(height: 18),
+
+                buildLabel("Persentase"),
+
+                // FIX: gunakan percentageController, bukan availableUnitController
+                TextFormField(
+                  readOnly: true,
+                  controller: percentageController,
+                  style: const TextStyle(color: Colors.black54),
+                  decoration: inputDecoration(
+                    "",
+                  ).copyWith(filled: true, fillColor: Colors.grey.shade200),
+                ),
+
+                const SizedBox(height: 18),
+
+                buildLabel("Catatan (Opsional)"),
+
+                TextFormField(
+                  controller: noteController,
+                  maxLines: 4,
+                  decoration: inputDecoration(
+                    "Tambahkan catatan jika diperlukan...",
+                  ),
+                ),
+
+                const SizedBox(height: 28),
+
+                SizedBox(
+                  width: double.infinity,
+                  height: 52,
+                  child: ElevatedButton(
+                    onPressed: isLoading ? null : submitUpdate,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF1565C0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-
-                    const SizedBox(width: 14),
-
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          facilityType.name,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                    child: isLoading
+                        ? const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2,
+                            ),
+                          )
+                        : const Text(
+                            "Simpan Perubahan",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-
-                        const SizedBox(height: 4),
-
-                        Text(
-                          facilityType.description,
-                          style: TextStyle(
-                            color: Colors.grey.shade600,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 24),
-
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Informasi Unit",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                    color: Colors.grey.shade800,
                   ),
                 ),
-              ),
 
-              const SizedBox(height: 18),
+                const SizedBox(height: 14),
 
-              buildLabel("Total Unit"),
-
-              TextFormField(
-                controller: totalUnitController,
-                keyboardType: TextInputType.number,
-                onChanged: (_) => calculateData(),
-                decoration: inputDecoration(""),
-              ),
-
-              const SizedBox(height: 18),
-
-              buildLabel("Terpakai"),
-
-              TextFormField(
-                controller: usedUnitController,
-                keyboardType: TextInputType.number,
-                onChanged: (_) => calculateData(),
-                decoration: inputDecoration(""),
-              ),
-
-              const SizedBox(height: 18),
-
-              buildLabel("Tersedia"),
-
-              TextFormField(
-                readOnly: true,
-                controller: availableUnitController,
-                style: const TextStyle(color: Colors.black54),
-                decoration: inputDecoration(
-                  "",
-                ).copyWith(filled: true, fillColor: Colors.grey.shade200),
-              ),
-
-              const SizedBox(height: 18),
-
-              buildLabel("Persentase"),
-
-              TextFormField(
-                readOnly: true,
-                controller: availableUnitController,
-                style: const TextStyle(color: Colors.black54),
-                decoration: inputDecoration(
-                  "",
-                ).copyWith(filled: true, fillColor: Colors.grey.shade200),
-              ),
-
-              const SizedBox(height: 18),
-
-              buildLabel("Catatan (Opsional)"),
-
-              TextFormField(
-                controller: noteController,
-                maxLines: 4,
-                decoration: inputDecoration(
-                  "Tambahkan catatan jika diperlukan...",
-                ),
-              ),
-
-              const SizedBox(height: 28),
-
-              SizedBox(
-                width: double.infinity,
-                height: 52,
-                child: ElevatedButton(
-                  onPressed: isLoading ? null : submitUpdate,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF1565C0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    "Batal",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                  child: isLoading
-                      ? const SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                            strokeWidth: 2,
-                          ),
-                        )
-                      : const Text(
-                          "Simpan Perubahan",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
                 ),
-              ),
-
-              const SizedBox(height: 14),
-
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text(
-                  "Batal",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

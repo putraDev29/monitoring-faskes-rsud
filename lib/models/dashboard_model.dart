@@ -57,17 +57,17 @@ class Hospital {
 class Summary {
   final int totalFacility;
   final int totalAvailableUnit;
-  final int safe;
-  final int warning;
-  final int critical;
+  final int tersedia;
+  final int terbatas;
+  final int penuh;
   final int percentage;
 
   Summary({
     required this.totalFacility,
     required this.totalAvailableUnit,
-    required this.safe,
-    required this.warning,
-    required this.critical,
+    required this.tersedia,
+    required this.terbatas,
+    required this.penuh,
     required this.percentage,
   });
 
@@ -78,11 +78,11 @@ class Summary {
       totalAvailableUnit:
           int.tryParse(json['total_available_unit'].toString()) ?? 0,
 
-      safe: int.tryParse(json['safe'].toString()) ?? 0,
+      tersedia: int.tryParse(json['tersedia'].toString()) ?? 0,
 
-      warning: int.tryParse(json['warning'].toString()) ?? 0,
+      terbatas: int.tryParse(json['terbatas'].toString()) ?? 0,
 
-      critical: int.tryParse(json['critical'].toString()) ?? 0,
+      penuh: int.tryParse(json['penuh'].toString()) ?? 0,
 
       percentage: int.tryParse(json['percentage'].toString()) ?? 0,
     );
@@ -118,7 +118,7 @@ class AlertModel {
 
       percentage: double.tryParse(json['percentage'].toString()) ?? 0,
 
-      status: json['status'] ?? "warning",
+      status: json['status'] ?? "terbatas",
     );
   }
 }

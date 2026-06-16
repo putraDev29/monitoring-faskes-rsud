@@ -10,7 +10,7 @@ class UserDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF6F8FB),
+      backgroundColor: const Color(0xFF0D47A1),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: const Color(0xFF0D47A1),
@@ -41,11 +41,20 @@ class UserDetailPage extends StatelessWidget {
         ),
       ),
 
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [_header(), const SizedBox(height: 16), _infoCard()],
+      body: SizedBox.expand(
+        child: Container(
+          decoration: const BoxDecoration(
+            color: Color(0xFFF6F8FB),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(28),
+              topRight: Radius.circular(28),
+            ),
+          ),
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(16, 24, 16, 16),
+            child: Column(
+              children: [_header(), const SizedBox(height: 16), _infoCard()],
+            ),
           ),
         ),
       ),

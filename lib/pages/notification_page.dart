@@ -82,8 +82,9 @@ class _NotificationPageState extends State<NotificationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
-      bottomNavigationBar: const ReusableBottomNav(selected: 3),
+      // FIX: samakan warna Scaffold dengan AppBar agar lengkungan terlihat
+      backgroundColor: const Color(0xFF0D47A1),
+      bottomNavigationBar: const ReusableBottomNav(selected: 5),
 
       appBar: AppBar(
         elevation: 0,
@@ -100,105 +101,116 @@ class _NotificationPageState extends State<NotificationPage> {
         ),
       ),
 
-      body: Column(
-        children: [
-          const SizedBox(height: 16),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _filterButton(title: 'Semua', value: 'all'),
-              _filterButton(title: 'Sudah Dibaca', value: 'read'),
-              _filterButton(title: 'Belum Dibaca', value: 'unread'),
-            ],
+      body: Container(
+        decoration: const BoxDecoration(
+          color: Color(0xFFF4F6F9),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(28),
+            topRight: Radius.circular(28),
           ),
+        ),
+        child: Column(
+          children: [
+            const SizedBox(height: 20),
 
-          const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _filterButton(title: 'Semua', value: 'all'),
+                _filterButton(title: 'Sudah Dibaca', value: 'read'),
+                _filterButton(title: 'Belum Dibaca', value: 'unread'),
+              ],
+            ),
 
-          Expanded(
-            child: isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    itemCount: filteredNotifications.length,
-                    itemBuilder: (context, index) {
-                      final item = filteredNotifications[index];
+            const SizedBox(height: 16),
 
-                      return GestureDetector(
-                        onTap: () async {
-                          if (!item.isRead) {
-                            await ApiService.readNotification(item.id);
+            Expanded(
+              child: isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : ListView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      itemCount: filteredNotifications.length,
+                      itemBuilder: (context, index) {
+                        final item = filteredNotifications[index];
 
-                            setState(() {
-                              markAsRead(item.id);
-                            });
-                          }
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.only(bottom: 12),
-                          padding: const EdgeInsets.all(14),
-                          decoration: BoxDecoration(
-                            color: item.isRead
-                                ? Colors.white
-                                : Colors.blue.withOpacity(0.05),
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 42,
-                                height: 42,
-                                decoration: BoxDecoration(
-                                  color: _getColor(item.type).withOpacity(0.1),
-                                  borderRadius: BorderRadius.circular(12),
+                        return GestureDetector(
+                          onTap: () async {
+                            if (!item.isRead) {
+                              await ApiService.readNotification(item.id);
+
+                              setState(() {
+                                markAsRead(item.id);
+                              });
+                            }
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.only(bottom: 12),
+                            padding: const EdgeInsets.all(14),
+                            decoration: BoxDecoration(
+                              color: item.isRead
+                                  ? Colors.white
+                                  : Colors.blue.withOpacity(0.05),
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 42,
+                                  height: 42,
+                                  decoration: BoxDecoration(
+                                    color:
+                                        _getColor(item.type).withOpacity(0.1),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Icon(
+                                    _getIcon(item.type),
+                                    color: _getColor(item.type),
+                                  ),
                                 ),
-                                child: Icon(
-                                  _getIcon(item.type),
-                                  color: _getColor(item.type),
-                                ),
-                              ),
 
-                              const SizedBox(width: 12),
+                                const SizedBox(width: 12),
 
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      item.title,
-                                      style: TextStyle(
-                                        fontWeight: item.isRead
-                                            ? FontWeight.normal
-                                            : FontWeight.bold,
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        item.title,
+                                        style: TextStyle(
+                                          fontWeight: item.isRead
+                                              ? FontWeight.normal
+                                              : FontWeight.bold,
+                                        ),
                                       ),
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      item.message,
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 13,
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        item.message,
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 13,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
 
-                              Text(
-                                item.createdAt.substring(11, 16),
-                                style: const TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 12,
+                                Text(
+                                  item.createdAt.substring(11, 16),
+                                  style: const TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 12,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-          ),
-        ],
+                        );
+                      },
+                    ),
+            ),
+          ],
+        ),
       ),
     );
   }

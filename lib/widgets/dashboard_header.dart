@@ -22,11 +22,6 @@ class DashboardHeader extends StatelessWidget {
 
       decoration: const BoxDecoration(
         color: AppColor.primary,
-
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(28),
-          bottomRight: Radius.circular(28),
-        ),
       ),
 
       child: SafeArea(

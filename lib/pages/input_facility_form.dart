@@ -115,7 +115,7 @@ class _InputFacilityFormState extends State<InputFacilityForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F7FB),
+      backgroundColor: const Color(0xFF0D47A1),
 
       appBar: AppBar(
         elevation: 0,
@@ -147,95 +147,105 @@ class _InputFacilityFormState extends State<InputFacilityForm> {
         ),
       ),
 
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 18),
+      body: SizedBox.expand(
+        child: Container(
+          decoration: const BoxDecoration(
+            color: Color(0xFFF5F7FB),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(28),
+              topRight: Radius.circular(28),
+            ),
+          ),
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(16, 24, 16, 16),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  const SizedBox(height: 18),
 
-              buildLabel("Nama Fisilitas"),
+                  buildLabel("Nama Fisilitas"),
 
-              TextFormField(
-                controller: nameFacilityController,
-                keyboardType: TextInputType.text,
-                decoration: inputDecoration("Masukkan Nama Fasilitas"),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Nama fasilitas wajib diisi";
-                  }
+                  TextFormField(
+                    controller: nameFacilityController,
+                    keyboardType: TextInputType.text,
+                    decoration: inputDecoration("Masukkan Nama Fasilitas"),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Nama fasilitas wajib diisi";
+                      }
 
-                  return null;
-                },
-              ),
+                      return null;
+                    },
+                  ),
 
-              const SizedBox(height: 18),
+                  const SizedBox(height: 18),
 
-              // TOTAL UNIT
-              buildLabel("Total Unit"),
+                  // TOTAL UNIT
+                  buildLabel("Total Unit"),
 
-              TextFormField(
-                controller: totalUnitController,
-                keyboardType: TextInputType.number,
-                decoration: inputDecoration("Masukkan total unit"),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Total unit wajib diisi";
-                  }
+                  TextFormField(
+                    controller: totalUnitController,
+                    keyboardType: TextInputType.number,
+                    decoration: inputDecoration("Masukkan total unit"),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Total unit wajib diisi";
+                      }
 
-                  return null;
-                },
-              ),
+                      return null;
+                    },
+                  ),
 
-              const SizedBox(height: 18),
+                  const SizedBox(height: 18),
 
-              // NOTE
-              buildLabel("Catatan (Opsional)"),
+                  // NOTE
+                  buildLabel("Catatan (Opsional)"),
 
-              TextFormField(
-                controller: noteController,
-                maxLines: 5,
-                decoration: inputDecoration("Tambahkan catatan..."),
-              ),
+                  TextFormField(
+                    controller: noteController,
+                    maxLines: 5,
+                    decoration: inputDecoration("Tambahkan catatan..."),
+                  ),
 
-              const SizedBox(height: 30),
+                  const SizedBox(height: 30),
 
-              SizedBox(
-                width: double.infinity,
-                height: 55,
-                child: ElevatedButton(
-                  onPressed: isLoading ? null : submitData,
+                  SizedBox(
+                    width: double.infinity,
+                    height: 55,
+                    child: ElevatedButton(
+                      onPressed: isLoading ? null : submitData,
 
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF1565C0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF1565C0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                      ),
+
+                      child: isLoading
+                          ? const SizedBox(
+                              width: 22,
+                              height: 22,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 2,
+                              ),
+                            )
+                          : const Text(
+                              "Simpan Fasilitas",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                     ),
                   ),
 
-                  child: isLoading
-                      ? const SizedBox(
-                          width: 22,
-                          height: 22,
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                            strokeWidth: 2,
-                          ),
-                        )
-                      : const Text(
-                          "Simpan Fasilitas",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                ),
+                  const SizedBox(height: 30),
+                ],
               ),
-
-              const SizedBox(height: 30),
-            ],
+            ),
           ),
         ),
       ),
