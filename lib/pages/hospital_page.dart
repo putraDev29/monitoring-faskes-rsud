@@ -99,12 +99,12 @@ class _HospitalsPageState extends State<HospitalsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D47A1),
+      backgroundColor: const Color(0xFF00BFFF),
       bottomNavigationBar: const ReusableBottomNav(selected: 1),
 
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: const Color(0xFF0D47A1),
+        backgroundColor: const Color(0xFF00BFFF),
         automaticallyImplyLeading: false,
         centerTitle: true,
         title: const Text(
@@ -169,7 +169,7 @@ class _HospitalsPageState extends State<HospitalsPage> {
                         final filter = filters[index];
                         final isSelected = selectedFilter == filter;
 
-                        Color selectedColor = const Color(0xFF0D47A1);
+                        Color selectedColor = const Color(0xFF00BFFF);
                         if (filter == "tersedia") {
                           selectedColor = Colors.green;
                         } else if (filter == "terbatas") {
@@ -288,7 +288,7 @@ class _HospitalsPageState extends State<HospitalsPage> {
                 width: 54,
                 height: 54,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF0D47A1).withOpacity(0.1),
+                  color: const Color(0xFF00BFFF).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 clipBehavior: Clip.antiAlias,
@@ -298,13 +298,13 @@ class _HospitalsPageState extends State<HospitalsPage> {
                         fit: BoxFit.cover,
                         errorBuilder: (_, __, ___) => const Icon(
                           Icons.local_hospital,
-                          color: Color(0xFF0D47A1),
+                          color: Color(0xFF00BFFF),
                           size: 28,
                         ),
                       )
                     : const Icon(
                         Icons.local_hospital,
-                        color: Color(0xFF0D47A1),
+                        color: Color(0xFF00BFFF),
                         size: 28,
                       ),
               ),

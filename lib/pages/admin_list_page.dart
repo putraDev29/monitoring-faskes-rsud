@@ -121,10 +121,10 @@ class _AdminListPageState extends State<AdminListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D47A1),
+      backgroundColor: const Color(0xFF00BFFF),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: const Color(0xFF0D47A1),
+        backgroundColor: const Color(0xFF00BFFF),
         leading: IconButton(
           onPressed: () {
             Navigator.pushReplacement(
@@ -188,7 +188,7 @@ class _AdminListPageState extends State<AdminListPage> {
                       icon: const Icon(Icons.add, size: 18),
                       label: const Text("Tambah Admin"),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF0D47A1),
+                        backgroundColor: const Color(0xFF00BFFF),
                         foregroundColor: Colors.white,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
@@ -206,12 +206,12 @@ class _AdminListPageState extends State<AdminListPage> {
 
               Expanded(
                 child: _isLoading
-                    ? const Center(child: CircularProgressIndicator(color: Color(0xFF0D47A1)))
+                    ? const Center(child: CircularProgressIndicator(color: Color(0xFF00BFFF)))
                     : _admins.isEmpty
                         ? _emptyState()
                         : RefreshIndicator(
                             onRefresh: _loadAdmins,
-                            color: const Color(0xFF0D47A1),
+                            color: const Color(0xFF00BFFF),
                             child: ListView.builder(
                               padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                               itemCount: _admins.length,
@@ -251,7 +251,7 @@ class _AdminListPageState extends State<AdminListPage> {
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF0D47A1),
+                color: Color(0xFF00BFFF),
               ),
             ),
           ),
@@ -289,10 +289,10 @@ class _AdminListPageState extends State<AdminListPage> {
                 child: Container(
                   padding: const EdgeInsets.all(7),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF0D47A1).withOpacity(0.08),
+                    color: const Color(0xFF00BFFF).withOpacity(0.08),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Icon(Icons.edit_outlined, size: 18, color: Color(0xFF0D47A1)),
+                  child: const Icon(Icons.edit_outlined, size: 18, color: Color(0xFF00BFFF)),
                 ),
               ),
               const SizedBox(height: 6),
@@ -330,7 +330,7 @@ class _AdminListPageState extends State<AdminListPage> {
             onPressed: _goToAddAdmin,
             icon: const Icon(Icons.add),
             label: const Text("Tambah Admin Sekarang"),
-            style: TextButton.styleFrom(foregroundColor: const Color(0xFF0D47A1)),
+            style: TextButton.styleFrom(foregroundColor: const Color(0xFF00BFFF)),
           ),
         ],
       ),

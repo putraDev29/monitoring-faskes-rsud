@@ -101,10 +101,10 @@ class _AddAdminFormPageState extends State<AddAdminFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D47A1),
+      backgroundColor: const Color(0xFF00BFFF),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: const Color(0xFF0D47A1),
+        backgroundColor: const Color(0xFF00BFFF),
         centerTitle: true,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
@@ -138,10 +138,10 @@ class _AddAdminFormPageState extends State<AddAdminFormPage> {
                   Container(
                     padding: const EdgeInsets.all(14),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF0D47A1).withOpacity(0.06),
+                      color: const Color(0xFF00BFFF).withOpacity(0.06),
                       borderRadius: BorderRadius.circular(14),
                       border: Border.all(
-                        color: const Color(0xFF0D47A1).withOpacity(0.15),
+                        color: const Color(0xFF00BFFF).withOpacity(0.15),
                       ),
                     ),
                     child: Row(
@@ -150,14 +150,14 @@ class _AddAdminFormPageState extends State<AddAdminFormPage> {
                           width: 44,
                           height: 44,
                           decoration: BoxDecoration(
-                            color: const Color(0xFF0D47A1).withOpacity(0.12),
+                            color: const Color(0xFF00BFFF).withOpacity(0.12),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Icon(
                             _isEdit
                                 ? Icons.edit_outlined
                                 : Icons.admin_panel_settings_outlined,
-                            color: const Color(0xFF0D47A1),
+                            color: const Color(0xFF00BFFF),
                           ),
                         ),
                         const SizedBox(width: 12),
@@ -168,7 +168,7 @@ class _AddAdminFormPageState extends State<AddAdminFormPage> {
                               Text(
                                 _isEdit ? "Edit Data Admin" : "Tambah Admin Baru",
                                 style: const TextStyle(
-                                  color: Color(0xFF0D47A1),
+                                  color: Color(0xFF00BFFF),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
                                 ),
@@ -258,7 +258,7 @@ class _AddAdminFormPageState extends State<AddAdminFormPage> {
                     child: ElevatedButton(
                       onPressed: _isLoading ? null : _submit,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF0D47A1),
+                        backgroundColor: const Color(0xFF00BFFF),
                         foregroundColor: Colors.white,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
@@ -326,7 +326,7 @@ class _AddAdminFormPageState extends State<AddAdminFormPage> {
           width: 4,
           height: 18,
           decoration: BoxDecoration(
-            color: const Color(0xFF0D47A1),
+            color: const Color(0xFF00BFFF),
             borderRadius: BorderRadius.circular(2),
           ),
         ),
@@ -336,7 +336,7 @@ class _AddAdminFormPageState extends State<AddAdminFormPage> {
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 14,
-            color: Color(0xFF0D47A1),
+            color: Color(0xFF00BFFF),
           ),
         ),
       ],
@@ -416,7 +416,7 @@ class _AddAdminFormPageState extends State<AddAdminFormPage> {
       hintText: hint,
       hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14),
       prefixIcon: icon != null
-          ? Icon(icon, color: const Color(0xFF0D47A1), size: 20)
+          ? Icon(icon, color: const Color(0xFF00BFFF), size: 20)
           : null,
       filled: true,
       fillColor: Colors.white,
@@ -431,7 +431,7 @@ class _AddAdminFormPageState extends State<AddAdminFormPage> {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
-        borderSide: const BorderSide(color: Color(0xFF0D47A1), width: 1.5),
+        borderSide: const BorderSide(color: Color(0xFF00BFFF), width: 1.5),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),

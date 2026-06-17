@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:monitoring_faskes_rsud/pages/facilities_page.dart';
+import 'package:monitoring_faskes_rsud/pages/hospital_page.dart';
 
 import '../config/app_color.dart';
 import '../models/dashboard_model.dart';
@@ -44,7 +45,7 @@ class _DashboardPageState extends State<DashboardPage> {
     return Scaffold(
       // Background Scaffold = biru agar celah di balik lengkungan
       // content tidak tampak abu-abu
-      backgroundColor: const Color(0xFF0D47A1),
+      backgroundColor: const Color(0xFF00BFFF),
       bottomNavigationBar: const ReusableBottomNav(selected: 0),
       body: dashboard == null
           ? const Scaffold(
@@ -206,6 +207,61 @@ class _DashboardPageState extends State<DashboardPage> {
                                 ),
                               ),
                             ],
+                          ),
+
+                          const SizedBox(height: 24),
+
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const HospitalsPage(),
+                                ),
+                              );
+                            },
+                            borderRadius: BorderRadius.circular(12),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 14,
+                                vertical: 10,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.08),
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              child: const Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.location_city_outlined,
+                                    color: Color(0xFF00BFFF),
+                                    size: 18,
+                                  ),
+                                  SizedBox(width: 8),
+                                  Text(
+                                    "Lihat Fasilitas Rumah Sakit Lain",
+                                    style: TextStyle(
+                                      color: Color(0xFF00BFFF),
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  SizedBox(width: 6),
+                                  Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: Color(0xFF00BFFF),
+                                    size: 14,
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
 
                           const SizedBox(height: 24),

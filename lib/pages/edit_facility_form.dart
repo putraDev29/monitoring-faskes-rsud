@@ -247,12 +247,12 @@ class _EditFacilityFormState extends State<EditFacilityForm> {
     final facilityType = widget.facility.facilityType;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF0D47A1), // biru untuk area di balik lengkungan
+      backgroundColor: const Color(0xFF00BFFF), // biru untuk area di balik lengkungan
 
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        backgroundColor: const Color(0xFF0D47A1),
+        backgroundColor: const Color(0xFF00BFFF),
 
         leading: IconButton(
           onPressed: () {

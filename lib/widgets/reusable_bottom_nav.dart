@@ -50,29 +50,24 @@ class _ReusableBottomNavState extends State<ReusableBottomNav> {
         break;
 
       case 1:
-        page = const HospitalsPage();
-        break;
-
-      case 2:
         page = const FacilitiesPage();
         break;
 
-      case 3:
+      case 2:
         page = const ExaminationsPage();
         break;
 
-      case 4:
+      case 3:
         page = const HistoryFacilityPage();
         break;
 
-      case 5:
+      case 4:
         page = const NotificationPage();
         break;
 
-      case 6:
+      case 5:
         page = const ProfilePage();
         break;
-
 
       default:
         page = const DashboardPage();
@@ -97,11 +92,6 @@ class _ReusableBottomNavState extends State<ReusableBottomNav> {
         const BottomNavigationBarItem(
           icon: Icon(Icons.dashboard),
           label: "Dashboard",
-        ),
-
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.medical_services),
-          label: "Rumah Sakit",
         ),
 
         const BottomNavigationBarItem(

@@ -132,10 +132,10 @@ class _ExaminationFormPageState extends State<ExaminationFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D47A1),
+      backgroundColor: const Color(0xFF00BFFF),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: const Color(0xFF0D47A1),
+        backgroundColor: const Color(0xFF00BFFF),
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(
@@ -174,10 +174,10 @@ class _ExaminationFormPageState extends State<ExaminationFormPage> {
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF0D47A1).withOpacity(0.06),
+                      color: const Color(0xFF00BFFF).withOpacity(0.06),
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
-                        color: const Color(0xFF0D47A1).withOpacity(0.15),
+                        color: const Color(0xFF00BFFF).withOpacity(0.15),
                       ),
                     ),
                     child: Row(
@@ -186,12 +186,12 @@ class _ExaminationFormPageState extends State<ExaminationFormPage> {
                           width: 48,
                           height: 48,
                           decoration: BoxDecoration(
-                            color: const Color(0xFF0D47A1).withOpacity(0.12),
+                            color: const Color(0xFF00BFFF).withOpacity(0.12),
                             borderRadius: BorderRadius.circular(14),
                           ),
                           child: const Icon(
                             Icons.medical_services_outlined,
-                            color: Color(0xFF0D47A1),
+                            color: Color(0xFF00BFFF),
                             size: 24,
                           ),
                         ),
@@ -205,7 +205,7 @@ class _ExaminationFormPageState extends State<ExaminationFormPage> {
                                     ? 'Edit data pemeriksaan'
                                     : 'Tambah pemeriksaan baru',
                                 style: const TextStyle(
-                                  color: Color(0xFF0D47A1),
+                                  color: Color(0xFF00BFFF),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
                                 ),
@@ -298,7 +298,7 @@ class _ExaminationFormPageState extends State<ExaminationFormPage> {
                     height: 52,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF0D47A1),
+                        backgroundColor: const Color(0xFF00BFFF),
                         foregroundColor: Colors.white,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
@@ -371,7 +371,7 @@ class _ExaminationFormPageState extends State<ExaminationFormPage> {
           width: 4,
           height: 18,
           decoration: BoxDecoration(
-            color: const Color(0xFF0D47A1),
+            color: const Color(0xFF00BFFF),
             borderRadius: BorderRadius.circular(2),
           ),
         ),
@@ -381,7 +381,7 @@ class _ExaminationFormPageState extends State<ExaminationFormPage> {
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 14,
-            color: Color(0xFF0D47A1),
+            color: Color(0xFF00BFFF),
           ),
         ),
       ],
@@ -413,7 +413,7 @@ class _ExaminationFormPageState extends State<ExaminationFormPage> {
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14),
-            prefixIcon: Icon(icon, color: const Color(0xFF0D47A1), size: 20),
+            prefixIcon: Icon(icon, color: const Color(0xFF00BFFF), size: 20),
             filled: true,
             fillColor: Colors.white,
             contentPadding: const EdgeInsets.symmetric(
@@ -431,7 +431,7 @@ class _ExaminationFormPageState extends State<ExaminationFormPage> {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(14),
               borderSide: const BorderSide(
-                color: Color(0xFF0D47A1),
+                color: Color(0xFF00BFFF),
                 width: 1.5,
               ),
             ),
@@ -483,7 +483,7 @@ class _ExaminationFormPageState extends State<ExaminationFormPage> {
             hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14),
             prefixIcon: const Icon(
               Icons.schedule,
-              color: Color(0xFF0D47A1),
+              color: Color(0xFF00BFFF),
               size: 20,
             ),
             suffixIcon: Icon(
@@ -508,7 +508,7 @@ class _ExaminationFormPageState extends State<ExaminationFormPage> {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(14),
               borderSide: const BorderSide(
-                color: Color(0xFF0D47A1),
+                color: Color(0xFF00BFFF),
                 width: 1.5,
               ),
             ),

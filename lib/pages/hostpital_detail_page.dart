@@ -191,24 +191,13 @@ class _HostpitalDetailPageState extends State<HostpitalDetailPage>
                   // Potongan gradient di bawah header sebagai "alas" TabBar
                   Container(
                     height: _tabBarOverlap,
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xFF0D47A1), Color(0xFF1565C0)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                    ),
+                    decoration: const BoxDecoration(color: Color(0xFF00BFFF)),
                   ),
                 ],
               ),
 
               // ── TabBar putih dengan sudut melengkung ──────────────────
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: 0,
-                child: _buildTabBar(),
-              ),
+              Positioned(left: 0, right: 0, bottom: 0, child: _buildTabBar()),
             ],
           ),
 
@@ -216,10 +205,7 @@ class _HostpitalDetailPageState extends State<HostpitalDetailPage>
           Expanded(
             child: TabBarView(
               controller: _tabController,
-              children: [
-                _buildFacilitiesTab(),
-                _buildExaminationsTab(),
-              ],
+              children: [_buildFacilitiesTab(), _buildExaminationsTab()],
             ),
           ),
         ],
@@ -232,7 +218,7 @@ class _HostpitalDetailPageState extends State<HostpitalDetailPage>
   PreferredSizeWidget _buildFixedAppBar() {
     return AppBar(
       elevation: 0,
-      backgroundColor: const Color(0xFF0D47A1),
+      backgroundColor: const Color(0xFF00BFFF),
       leading: IconButton(
         icon: const Icon(Icons.arrow_back, color: Colors.white),
         onPressed: () => Navigator.pop(context),
@@ -258,13 +244,7 @@ class _HostpitalDetailPageState extends State<HostpitalDetailPage>
 
     return Container(
       width: double.infinity,
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Color(0xFF0D47A1), Color(0xFF1565C0)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
+      decoration: const BoxDecoration(color: Color(0xFF00BFFF)),
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 20),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -380,7 +360,7 @@ class _HostpitalDetailPageState extends State<HostpitalDetailPage>
           // Tab items
           TabBar(
             controller: _tabController,
-            labelColor: const Color(0xFF0D47A1),
+            labelColor: const Color(0xFF00BFFF),
             unselectedLabelColor: Colors.grey,
             labelStyle: const TextStyle(
               fontWeight: FontWeight.bold,
@@ -390,7 +370,7 @@ class _HostpitalDetailPageState extends State<HostpitalDetailPage>
               fontWeight: FontWeight.w500,
               fontSize: 14,
             ),
-            indicatorColor: const Color(0xFF0D47A1),
+            indicatorColor: const Color(0xFF00BFFF),
             indicatorWeight: 3,
             indicatorSize: TabBarIndicatorSize.label,
             tabs: const [
@@ -489,10 +469,7 @@ class _HostpitalDetailPageState extends State<HostpitalDetailPage>
                 const SizedBox(height: 4),
                 Text(
                   "Tersedia ${item.availableUnit} dari ${item.totalUnit}",
-                  style: TextStyle(
-                    color: Colors.grey.shade600,
-                    fontSize: 13,
-                  ),
+                  style: TextStyle(color: Colors.grey.shade600, fontSize: 13),
                 ),
                 const SizedBox(height: 8),
                 Row(
@@ -504,8 +481,9 @@ class _HostpitalDetailPageState extends State<HostpitalDetailPage>
                           value: item.availableUnit / item.totalUnit,
                           minHeight: 8,
                           backgroundColor: Colors.grey.shade200,
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(statusColor),
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            statusColor,
+                          ),
                         ),
                       ),
                     ),
@@ -586,12 +564,12 @@ class _HostpitalDetailPageState extends State<HostpitalDetailPage>
             width: 54,
             height: 54,
             decoration: BoxDecoration(
-              color: const Color(0xFF0D47A1).withOpacity(0.1),
+              color: const Color(0xFF00BFFF).withOpacity(0.1),
               borderRadius: BorderRadius.circular(16),
             ),
             child: const Icon(
               Icons.medical_services_outlined,
-              color: Color(0xFF0D47A1),
+              color: Color(0xFF00BFFF),
               size: 26,
             ),
           ),
@@ -641,11 +619,7 @@ class _HostpitalDetailPageState extends State<HostpitalDetailPage>
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(
-                        Icons.schedule,
-                        size: 13,
-                        color: Colors.green,
-                      ),
+                      const Icon(Icons.schedule, size: 13, color: Colors.green),
                       const SizedBox(width: 4),
                       Text(
                         "${item.openingHours} – ${item.closingHours}",
@@ -668,10 +642,7 @@ class _HostpitalDetailPageState extends State<HostpitalDetailPage>
 
   // ── Empty State ────────────────────────────────────────────────────────────
 
-  Widget _buildEmptyState({
-    required IconData icon,
-    required String message,
-  }) {
+  Widget _buildEmptyState({required IconData icon, required String message}) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -692,7 +663,7 @@ class _HostpitalDetailPageState extends State<HostpitalDetailPage>
   Widget _buildError() {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0D47A1),
+        backgroundColor: const Color(0xFF00BFFF),
         title: const Text(
           "Detail Rumah Sakit",
           style: TextStyle(color: Colors.white),

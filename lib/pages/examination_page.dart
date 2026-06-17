@@ -163,13 +163,13 @@ class _ExaminationsPageState extends State<ExaminationsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D47A1),
+      backgroundColor: const Color(0xFF00BFFF),
 
-      bottomNavigationBar: const ReusableBottomNav(selected: 3),
+      bottomNavigationBar: const ReusableBottomNav(selected: 2),
 
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: const Color(0xFF0D47A1),
+        backgroundColor: const Color(0xFF00BFFF),
         automaticallyImplyLeading: false,
         centerTitle: true,
         title: const Text(
@@ -251,13 +251,13 @@ class _ExaminationsPageState extends State<ExaminationsPage> {
                             vertical: 6,
                           ),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF0D47A1).withOpacity(0.08),
+                            color: const Color(0xFF00BFFF).withOpacity(0.08),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Text(
                             "${filteredExaminations.length} pemeriksaan",
                             style: const TextStyle(
-                              color: Color(0xFF0D47A1),
+                              color: Color(0xFF00BFFF),
                               fontWeight: FontWeight.w600,
                               fontSize: 13,
                             ),
@@ -318,12 +318,12 @@ class _ExaminationsPageState extends State<ExaminationsPage> {
                 width: 54,
                 height: 54,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF0D47A1).withOpacity(0.1),
+                  color: const Color(0xFF00BFFF).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: const Icon(
                   Icons.medical_services_outlined,
-                  color: Color(0xFF0D47A1),
+                  color: Color(0xFF00BFFF),
                   size: 26,
                 ),
               ),
@@ -395,13 +395,13 @@ class _ExaminationsPageState extends State<ExaminationsPage> {
                     child: Container(
                       padding: const EdgeInsets.all(7),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF0D47A1).withOpacity(0.08),
+                        color: const Color(0xFF00BFFF).withOpacity(0.08),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: const Icon(
                         Icons.edit_outlined,
                         size: 17,
-                        color: Color(0xFF0D47A1),
+                        color: Color(0xFF00BFFF),
                       ),
                     ),
                   ),
@@ -460,7 +460,7 @@ class _ExaminationsPageState extends State<ExaminationsPage> {
             const SizedBox(height: 20),
             ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF0D47A1),
+                backgroundColor: const Color(0xFF00BFFF),
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),

@@ -91,7 +91,7 @@ class _FacilitiesPageState extends State<FacilitiesPage> {
       case 'penuh':
         return Colors.red;
       default:
-        return const Color(0xFF0D47A1);
+        return const Color(0xFF00BFFF);
     }
   }
 
@@ -165,14 +165,14 @@ class _FacilitiesPageState extends State<FacilitiesPage> {
     return Scaffold(
       // ── PERUBAHAN 1: backgroundColor diubah ke biru ─────────────────────
       // Sebelum: const Color(0xFFF5F7FB)
-      // Sesudah: const Color(0xFF0D47A1)
+      // Sesudah: const Color(0xFF00BFFF)
       // Tujuan: area tepat di bawah AppBar (tempat lengkungan berada)
       // menjadi biru, sehingga container putih yang melengkung kontras.
-      backgroundColor: const Color(0xFF0D47A1),
-      bottomNavigationBar: const ReusableBottomNav(selected: 2),
+      backgroundColor: const Color(0xFF00BFFF),
+      bottomNavigationBar: const ReusableBottomNav(selected: 1),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: const Color(0xFF0D47A1),
+        backgroundColor: const Color(0xFF00BFFF),
         automaticallyImplyLeading: false,
         centerTitle: true,
         title: const Text(
@@ -306,13 +306,13 @@ class _FacilitiesPageState extends State<FacilitiesPage> {
                             vertical: 6,
                           ),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF0D47A1).withOpacity(0.08),
+                            color: const Color(0xFF00BFFF).withOpacity(0.08),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Text(
                             "${filteredFacilities.length} fasilitas",
                             style: const TextStyle(
-                              color: Color(0xFF0D47A1),
+                              color: Color(0xFF00BFFF),
                               fontWeight: FontWeight.w600,
                               fontSize: 13,
                             ),

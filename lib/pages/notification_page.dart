@@ -83,12 +83,12 @@ class _NotificationPageState extends State<NotificationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       // FIX: samakan warna Scaffold dengan AppBar agar lengkungan terlihat
-      backgroundColor: const Color(0xFF0D47A1),
-      bottomNavigationBar: const ReusableBottomNav(selected: 5),
+      backgroundColor: const Color(0xFF00BFFF),
+      bottomNavigationBar: const ReusableBottomNav(selected: 4),
 
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: const Color(0xFF0D47A1),
+        backgroundColor: const Color(0xFF00BFFF),
         automaticallyImplyLeading: false,
         centerTitle: true,
         title: const Text(
@@ -229,7 +229,7 @@ class _NotificationPageState extends State<NotificationPage> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         decoration: BoxDecoration(
-          color: selected ? const Color(0xFF1565C0) : Colors.white,
+          color: selected ? const Color(0xFF00BFFF) : Colors.white,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Text(

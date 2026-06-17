@@ -276,13 +276,13 @@ class _HistoryFacilityPageState extends State<HistoryFacilityPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D47A1),
+      backgroundColor: const Color(0xFF00BFFF),
 
-      bottomNavigationBar: const ReusableBottomNav(selected: 4),
+      bottomNavigationBar: const ReusableBottomNav(selected: 3),
 
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: const Color(0xFF0D47A1),
+        backgroundColor: const Color(0xFF00BFFF),
         centerTitle: true,
         automaticallyImplyLeading: false,
         title: const Text(
@@ -370,7 +370,7 @@ class _HistoryFacilityPageState extends State<HistoryFacilityPage> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(14),
                             borderSide: const BorderSide(
-                              color: Color(0xFF0D47A1),
+                              color: Color(0xFF00BFFF),
                               width: 1,
                             ),
                           ),
@@ -395,7 +395,7 @@ class _HistoryFacilityPageState extends State<HistoryFacilityPage> {
 
                         final isSelected = selectedFilter == filter;
 
-                        Color selectedColor = const Color(0xFF0D47A1);
+                        Color selectedColor = const Color(0xFF00BFFF);
 
                         return GestureDetector(
                           onTap: () {

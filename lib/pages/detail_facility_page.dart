@@ -112,11 +112,11 @@ class DetailFacilityPage extends StatelessWidget {
     return Scaffold(
       // PERUBAHAN 1: backgroundColor → biru
       // agar celah di balik lengkungan tidak abu-abu
-      backgroundColor: const Color(0xFF0D47A1),
+      backgroundColor: const Color(0xFF00BFFF),
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        backgroundColor: const Color(0xFF0D47A1),
+        backgroundColor: const Color(0xFF00BFFF),
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
           icon: const Icon(
@@ -332,7 +332,7 @@ class DetailFacilityPage extends StatelessWidget {
                     if (result == true) Navigator.pop(context, true);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF1565C0),
+                    backgroundColor: const Color(0xFF00BFFF),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14),
                     ),
